@@ -23,36 +23,7 @@ DFT / Scan / EDT	Siemens Tessent Shell
 ATPG	Siemens Tessent Shell
 Place & Route	Cadence Innovus
 Static Timing Analysis	Cadence Tempus
-Repository Structure
-sync-fifo-rtl2gds/
-├── rtl/                     # Synchronous FIFO RTL source files
-│   ├── sync_fifo.v
-│   └── fifo_pkg.v
-├── tb/                      # Testbenches for functional verification
-│   └── tb_sync_fifo.sv
-├── constraints/             # SDC timing/design constraints
-│   └── sync_fifo.sdc
-├── synthesis/               # Genus synthesis scripts & reports
-│   ├── run_genus.tcl
-│   └── reports/
-├── dft/                     # Tessent scan insertion & EDT compression scripts
-│   ├── scan_insertion.tcl
-│   ├── edt_config.tcl
-│   └── atpg/
-│       ├── run_atpg.tcl
-│       └── patterns/
-├── pnr/                     # Innovus place & route scripts
-│   ├── floorplan.tcl
-│   ├── placement.tcl
-│   ├── cts.tcl
-│   ├── route.tcl
-│   └── reports/
-├── sta/                     # Tempus timing signoff scripts
-│   └── run_sta.tcl
-├── gds/                     # Final GDSII output
-│   └── sync_fifo.gds
-└── README.md
-Design Overview
+
 
 The synchronous FIFO is parameterized for:
 
