@@ -1,0 +1,164 @@
+//-------------------------------------------------
+//  File created by: Tessent Shell
+//          Version: 2022.4
+//       Created on: Fri Sep 18 11:53:46 IST 2026
+//-------------------------------------------------
+
+
+Core(sync_fifo_edt) {
+  Edt {
+    version : 3;
+    Instances {
+      edt_decompressor : sync_fifo_edt_decompressor_i;
+      edt_compactor : sync_fifo_edt_compactor_i;
+    }
+    Interface {
+      MasterClock(edt_clock) {
+      }
+      Update(edt_update) {
+      }
+      Bypass(edt_bypass) {
+      }
+      ChannelIn(edt_channels_in[0]) {
+      }
+      ChannelIn(edt_channels_in[1]) {
+      }
+      ChannelIn(edt_channels_in[2]) {
+      }
+      ChannelOut(edt_channels_out[0]) {
+      }
+      ChannelOut(edt_channels_out[1]) {
+      }
+      ChannelOut(edt_channels_out[2]) {
+      }
+      ScanInput(edt_scan_in[0]) {
+      }
+      ScanOutput(edt_scan_out[0]) {
+      }
+      ScanInput(edt_scan_in[1]) {
+      }
+      ScanOutput(edt_scan_out[1]) {
+      }
+      ScanInput(edt_scan_in[2]) {
+      }
+      ScanOutput(edt_scan_out[2]) {
+      }
+    }
+    Parameters {
+      iproc : setup;
+      Bypass {
+        parameter : edt_bypass;
+        type : boolean;
+        default_value : off;
+      }
+    }
+    EdtConfigurationCommon {
+      ip_version : 8;
+      scan_chains : 3;
+      compactor_type : xpress;
+      decompressor_type : edt;
+      decompressor_size : 16;
+      initialization_cycles : 8;
+      xor_taps_per_chain : 3;
+      longest_chain_range_min : 2;
+      longest_chain_range_max : 49;
+      multiple_fanouts_from_scan_chains : off;
+      clock_edt_before_shift : off;
+      clocking : edge;
+      reset : off;
+      lockup_cells : on;
+      retime_chain_boundaries : off;
+      chain_endpoints : any;
+      internal_static_control_tdr : off;
+      bypass_chain_change_edge : on;
+      change_edge_at_compactor_output_global : any;
+      BypassChains {
+        BypassChain(1) {
+          concatenated_chains : 1;
+        }
+        BypassChain(2) {
+          concatenated_chains : 2;
+        }
+        BypassChain(3) {
+          concatenated_chains : 3;
+        }
+      }
+      ScanChainClocking {
+        Chain(1) {
+        }
+        Chain(2) {
+        }
+        Chain(3) {
+        }
+      }
+    }
+    EdtConfiguration() {
+      input_channels : 3;
+      output_channels : 3;
+      separate_control_data_channels : off;
+      compactor_pipeline_stages : 0;
+      bypass_logic : on;
+      bypass_single_chain_config : off;
+      bypass_chains : 3;
+      DecompressorConnections {
+        ChainTaps {
+          chain(1) : 7, 9, 10;
+          chain(2) : 2, 5, 14;
+          chain(3) : 4, 11, 16;
+        }
+        ChannelTaps {
+          channel(1) : 1, 12;
+          channel(2) : 4, 9;
+          channel(3) : 7, 15;
+        }
+      }
+      CompactorConnections {
+        channel(1) : 1;
+        channel(2) : 2;
+        channel(3) : 3;
+      }
+      MaskRegisterBitsPerChannel {
+        channel(1) : 2;
+        channel(2) : 1;
+        channel(3) : 1;
+      }
+      MaskDecoderConnections {
+        ModeBit {
+          Coordinate {
+            channel(1) : 2;
+          }
+        }
+        OneHotDecoder(1) {
+          Coordinate {
+            channel(1) : 1;
+          }
+        }
+        OneHotDecoder(2) {
+          Coordinate {
+            channel(2) : 1;
+          }
+        }
+        OneHotDecoder(3) {
+          Coordinate {
+            channel(3) : 1;
+          }
+        }
+        xorDecoderConnection(1) {
+          Coordinate {
+            channel(1) : 1;
+          }
+        }
+        xorDecoderConnection(2) {
+          Coordinate {
+            channel(2) : 1;
+          }
+        }
+        xorDecoderConnection(3) {
+          Coordinate {
+            channel(3) : 1;
+          }
+        }
+      }
+    }
+  }
+}

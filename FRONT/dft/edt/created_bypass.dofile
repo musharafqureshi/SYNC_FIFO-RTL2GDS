@@ -1,0 +1,24 @@
+//--------------------------------------------------------------------------------
+//
+//  Unpublished work. Copyright 2022 Siemens
+//
+//  This material contains trade secrets or otherwise confidential 
+//  information owned by Siemens Industry Software Inc. or its affiliates 
+//  (collectively, SISW), or its licensors. Access to and use of this 
+//  information is strictly limited as set forth in the Customer's 
+//  applicable agreements with SISW.
+//
+//--------------------------------------------------------------------------------
+//  File created by: Tessent Shell
+//          Version: 2022.4
+//       Created on: Fri Sep 18 11:53:46 IST 2026
+//--------------------------------------------------------------------------------
+
+
+add_scan_groups grp1 edt/created_bypass.testproc
+add_scan_chains edt_channel1 grp1 edt_channels_in1 edt_channels_out1
+add_scan_chains edt_channel2 grp1 edt_channels_in2 edt_channels_out2
+add_scan_chains edt_channel3 grp1 edt_channels_in3 edt_channels_out3
+
+add_clocks 0 clk_i
+

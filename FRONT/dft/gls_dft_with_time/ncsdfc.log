@@ -1,0 +1,4 @@
+ncsdfc(64): 15.20-s031: (c) Copyright 1995-2017 Cadence Design Systems, Inc.
+	Reading SDF file from location "delays.sdf"
+ncsdfc: Memory Usage - 18.8M program + 13.3M data = 32.1M total
+ncsdfc: CPU Usage - 0.0s system + 0.0s user = 0.0s total (0.0s, 47.2% cpu)

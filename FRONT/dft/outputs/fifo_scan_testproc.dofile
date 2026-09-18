@@ -1,0 +1,30 @@
+#
+#  Written by Tessent Shell 2022.4 on Fri Sep 18 11:49:46 IST 2026
+#
+proc tessent_scan_common {} {
+   add_clocks 0 clk_i
+}
+
+
+proc tessent_scan_int_mode_mode {} {
+   add_scan_groups grp1 outputs/fifo_scan_testproc.testproc
+
+   add_scan_chains chain0 grp1 {/ts_si[0]} {/ts_so[0]}
+   add_scan_chains chain1 grp1 {/ts_si[1]} {/ts_so[1]}
+   add_scan_chains chain2 grp1 {/ts_si[2]} {/ts_so[2]}
+
+   tessent_scan_common
+
+}
+
+
+proc tessent_scan_setup { {mode int_mode} } {
+   switch -exact -- $mode {
+      int_mode { tessent_scan_int_mode_mode }
+      default {
+         display_message -error "invalid scan mode: $mode"
+      }
+   }
+}
+
+

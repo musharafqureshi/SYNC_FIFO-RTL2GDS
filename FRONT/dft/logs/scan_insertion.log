@@ -1,0 +1,115 @@
+//  sub-command: set_context dft -scan 
+//  sub-command: read_verilog rtl/fifo_noscan.v 
+//  sub-command: read_cell_library libs/slow_vdd1v0.mdt 
+//  Reading DFT Library file libs/slow_vdd1v0.mdt
+//  Finished reading file libs/slow_vdd1v0.mdt
+//  sub-command: read_sdc constraints/fifo.sdc 
+//  Command 'read_sdc' requires an elaborated design. Automatically elaborating the design ...
+//  Note: Top design is 'sync_fifo'.
+//  Warning: 57 cases: Unused net in DFT library model
+//  Note: Issue set_current_design with the -show_elaboration_warnings option to see more details about previous warnings
+//  Design elaboration successful.
+//  Reading SDC file constraints/fifo.sdc ...
+//  Finished reading SDC file constraints/fifo.sdc.
+//  sub-command: set_current_design 
+//  Note: Top design is 'sync_fifo'.
+//  sub-command: analyze_control_signals -auto_fix 
+//  Flattening process completed, cell instances=493, gates=1007, PIs=12, POs=11, CPU time=0.01 sec.
+//  ---------------------------------------------------------------------------
+//  Begin circuit learning analyses.
+//  --------------------------------
+//  Learning completed, CPU time=0.01 sec.
+//  ---------------------------------------------------------------------------
+//  Begin control signals identification analysis.
+//  ---------------------------------------------------------------------------
+//  Identified 1 clock control primary inputs.
+//     '/clk_i' (1) with off-state = 0.
+//  Identified 0 set control primary inputs.
+//  Identified 0 reset control primary inputs.
+//  Identified 0 read control primary inputs.
+//  Identified 0 write control primary inputs.
+//  ---------------------------------------------------------------------------
+//  Total number of internal lines is 441 (147 clocks, 147 sets , 147 resets, 0 reads, 0 writes).
+//  Total number of potentially clockable internal lines is 147 (147 clocks, 0 sets , 0 resets, 0 reads, 0 writes).
+//  Total number of not clockable internal lines is 294 (0 clocks, 147 sets , 147 resets, 0 reads, 0 writes).
+//  Total number of added primary input controls 1 (1 clocks, 0 sets , 0 resets, 0 reads, 0 writes).
+//  ---------------------------------------------------------------------------
+//  Warning: Flattened model deleted.
+//  sub-command: set_test_logic -clock on 
+//  sub-command: set_system_mode analysis 
+//  Flattening process completed, cell instances=493, gates=1007, PIs=12, POs=11, CPU time=0.01 sec.
+//  ---------------------------------------------------------------------------
+//  Begin circuit learning analyses.
+//  --------------------------------
+//  Learning completed, CPU time=0.01 sec.
+//  ---------------------------------------------------------------------------
+//  Begin scan chain identification process, memory elements = 147,
+//  sequential library cells = 147.
+//  ---------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
+//  Begin scannability rules checking for 147 sequential library cells.
+//  ---------------------------------------------------------------------------
+//  147 sequential library cells identified as scannable.
+//  ---------------------------------------------------------------------------
+//  Begin scan clock rules checking.
+//  ---------------------------------------------------------------------------
+//  1 scan clock/set/reset lines have been identified.
+//  All scan clocks successfully passed off-state check.
+//  147 sequential cells passed clock stability checking.
+//  ---------------------------------------------------------------------------
+//  Begin gating checking
+//  ---------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
+//  Checking clock for 0 non-scannable sequential instances
+//  ---------------------------------------------------------------------------
+//  0 sequential instances can be gated to be scannable
+//  0 sequential instances remain non-scannable
+//  ---------------------------------------------------------------------------
+//  Checking test clocks
+//  ---------------------------------------------------------------------------
+//  Number of test clocks required = 0
+//  ---------------------------------------------------------------------------
+//  Begin shift register identification for 147 sequential library cells.
+//  ---------------------------------------------------------------------------
+//  No shift registers identified.
+//  Number of targeted sequential library cells = 147
+//  Warning: The tool may require a shift-capture clock during insertion, 
+//           but no 'shift_capture_clock' DFT signal was identified 
+//           and no TCLK source was specified using the command 'set_scan_signals -tclk'.
+//  Note: The system clock 'clk_i' will be used as the shift-capture clock, if needed.
+//  sub-command: add_scan_mode int_mode -type internal -chain_length 50 -chain_count 3 -single_power_domain_chains on 
+//  sub-command: analyze_scan_chains 
+//  Chain allocation of 'int_mode' mode completed:
+//         3 distributed chains of size 49
+//  sub-command: insert_test_logic 
+=============================
+Test Logic Insertion Summary:
+=============================
+
+  Structural Data:
+  ----------------
+                           Added top-level port count:           3
+                                 Added instance count:           6
+
+  Logical Data:
+  -------------
+                           Added retiming logic count:           3
+                    Added scan chain count (int_mode):           3
+
+//  Warning: Flattened model deleted.
+//  sub-command: write_scan_order outputs/fifo.scandef 
+//  sub-command: report_scan_chains 
+
+===============================
+Scan Chains Created by the Tool
+===============================
+
+   Scan mode 'int_mode' scan chains:
+   ---------------------------------
+      chain = chain0   group = dummy  input = /ts_si[0]  output = /ts_so[0]  length = 49
+      chain = chain1   group = dummy  input = /ts_si[1]  output = /ts_so[1]  length = 49
+      chain = chain2   group = dummy  input = /ts_si[2]  output = /ts_so[2]  length = 49
+
+//  sub-command: write_design -output_file outputs/fifo_scan.v -rep 
+//  sub-command: write_atpg_setup outputs/fifo_scan_testproc -procfile -rep 
+//  sub-command: exit 

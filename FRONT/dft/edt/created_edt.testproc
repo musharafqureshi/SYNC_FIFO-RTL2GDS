@@ -1,0 +1,49 @@
+//
+// Written by Tessent Shell 2022.4 on Fri Sep 18 11:53:46 2026
+//
+set time scale 1.000000 ns ;
+set strobe_window time 10 ; 
+
+ timeplate gen_tp1 =
+    force_pi 0 ; 
+    measure_po 10 ; 
+    pulse_clock 20 10 ; 
+    period 40 ; 
+ end;
+
+ procedure shift =
+    scan_group grp1 ;
+    timeplate gen_tp1 ;
+    // cycle 0 starts at time 0
+    cycle =
+        force_sci ;
+        force edt_update 0 ;
+        measure_sco ;
+        pulse clk_i ;
+        pulse edt_clock ;
+    end;
+ end;
+
+ procedure load_unload =
+    scan_group grp1 ;
+    timeplate gen_tp1 ;
+    // cycle 0 starts at time 0
+    cycle =
+        force clk_i 0 ;
+        force edt_bypass 0 ;
+        force edt_clock 0 ;
+        force edt_update 1 ;
+        force scan_en 1 ;
+        pulse edt_clock ;
+    end ;
+    apply shift 57;
+ end;
+
+ procedure test_setup =
+    timeplate gen_tp1 ;
+    // cycle 0 starts at time 0
+    cycle =
+        force edt_clock 0 ;
+    end;
+ end;
+

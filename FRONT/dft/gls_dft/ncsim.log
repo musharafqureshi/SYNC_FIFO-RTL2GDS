@@ -1,0 +1,27 @@
+ncsim(64): 15.20-s031: (c) Copyright 1995-2017 Cadence Design Systems, Inc.
+
+-------------------------------------
+Relinquished control to SimVision...
+ncsim> 
+ncsim> database -open waves -into waves.shm -default
+Created default SHM database waves
+ncsim> probe -create -shm testbench.edt_channels_in1 testbench.checking_enabled testbench.checks testbench.clk_i testbench.edt_bypass testbench.edt_channels_in2 testbench.edt_channels_in3 testbench.edt_channels_out1 testbench.edt_channels_out2 testbench.edt_channels_out3 testbench.edt_clock testbench.edt_update testbench.empty_o testbench.error_o testbench.errors testbench.full_o testbench.g_empty testbench.g_error_exp testbench.g_full testbench.g_rd_data_exp testbench.g_rd_ptr testbench.g_wr_ptr testbench.gmem testbench.i testbench.rand_data testbench.rd_data_o testbench.rd_en_i testbench.rst_i testbench.scan_en testbench.wr_data_i testbench.wr_en_i
+Created probe 1
+ncsim> run
+[35000] --- Fill test ---
+[350000] --- Overflow test ---
+[371000] --- Drain test ---
+[690000] --- Underflow test ---
+[710000] --- Randomized stress test ---
+[2720000] --- Simultaneous read+write test ---
+=====================================================
+TEST PASSED  (329 checks, 0 errors)
+=====================================================
+Simulation complete via $finish(1) at time 3030 NS + 0
+./fifo_dft_.v:313     $finish;
+ncsim> ^C
+ncsim> exit
+...Regained control from SimVision
+-------------------------------------
+ncsim: Memory Usage - 36.4M program + 204.1M data = 240.5M total (244.1M Peak)
+ncsim: CPU Usage - 0.2s system + 0.1s user = 0.4s total (27.0s, 1.4% cpu)

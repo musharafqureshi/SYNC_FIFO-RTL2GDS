@@ -1,0 +1,358 @@
+//  sub-command: set_context patterns -scan 
+//  sub-command: read_verilog outputs/fifo_scan.v 
+//  sub-command: read_cell_library libs/slow_vdd1v0.mdt 
+//  Reading DFT Library file libs/slow_vdd1v0.mdt
+//  Finished reading file libs/slow_vdd1v0.mdt
+//  sub-command: set_current_design 
+//  Note: Top design is 'sync_fifo'.
+//  Warning: 57 cases: Unused net in DFT library model
+//  Note: Issue set_current_design with the -show_elaboration_warnings option to see more details about previous warnings
+//  sub-command: dofile outputs/fifo_scan_testproc_verify_scan_modes.dofile 
+//  command: set dofileName outputs/fifo_scan_testproc.dofile
+//  command: set designFile /home/syed/musharaf/fifo/front/dft/outputs/fifo_scan.v
+//  command: set topName {sync_fifo}
+//  command: set libName "libs/slow_vdd1v0.mdt"
+//  command: proc verify_all_scan_modes {} {
+//              set modeList [list int_mode]
+//              foreach mode $modeList {
+//                 set_system_mode setup
+//                 reset_design
+//                 tessent_scan_setup $mode
+//                 set_edt_options off
+//                 add_black_box -auto
+//                 set_system_mode analysis
+//                 report_scan_cells
+//              }
+//           }
+//  command: set_context patterns -scan
+//  command: delete_design 
+//  command: read_cell_library $libName
+//  Reading DFT Library file libs/slow_vdd1v0.mdt
+//  Finished reading file libs/slow_vdd1v0.mdt
+//  command: read_verilog $designFile
+//  command: set_current_design $topName
+//  Warning: 57 cases: Unused net in DFT library model
+//  Note: Issue set_current_design with the -show_elaboration_warnings option to see more details about previous warnings
+//  command: dofile $dofileName
+//    command: #
+//    command: #  Written by Tessent Shell 2022.4 on Fri Sep 18 11:49:46 IST 2026
+//    command: #
+//    command: proc tessent_scan_common {} {
+//                add_clocks 0 clk_i
+//             }
+//    command: proc tessent_scan_int_mode_mode {} {
+//                add_scan_groups grp1 outputs/fifo_scan_testproc.testproc
+//             
+//                add_scan_chains chain0 grp1 {/ts_si[0]} {/ts_so[0]}
+//                add_scan_chains chain1 grp1 {/ts_si[1]} {/ts_so[1]}
+//                add_scan_chains chain2 grp1 {/ts_si[2]} {/ts_so[2]}
+//             
+//                tessent_scan_common
+//             
+//             }
+//    command: proc tessent_scan_setup { {mode int_mode} } {
+//                switch -exact -- $mode {
+//                   int_mode { tessent_scan_int_mode_mode }
+//                   default {
+//                      display_message -error "invalid scan mode: $mode"
+//                   }
+//                }
+//             }
+//  command: verify_all_scan_modes
+//  sub-command: set_system_mode setup 
+//  Warning: Already in requested state.
+//  sub-command: reset_design 
+//  sub-command: add_scan_groups grp1 outputs/fifo_scan_testproc.testproc 
+//  sub-command: add_scan_chains chain0 grp1 /ts_si[0] /ts_so[0] 
+//  sub-command: add_scan_chains chain1 grp1 /ts_si[1] /ts_so[1] 
+//  sub-command: add_scan_chains chain2 grp1 /ts_si[2] /ts_so[2] 
+//  sub-command: add_clocks 0 clk_i 
+//  sub-command: set_edt_options off 
+//  sub-command: add_black_boxes -auto 
+//  sub-command: set_system_mode analysis 
+//  Flattening process completed, cell instances=499, gates=1776, PIs=16, POs=14, CPU time=0.01 sec.
+//  ---------------------------------------------------------------------------
+//  Begin circuit learning analyses.
+//  --------------------------------
+//  Learning completed, CPU time=0.01 sec.
+//  ---------------------------------------------------------------------------
+//  Begin scan chain identification process, memory elements = 150.
+//  ---------------------------------------------------------------------------
+//  Reading group test procedure file outputs/fifo_scan_testproc.testproc.
+//  Begin simulation of load_unload procedure.
+//  Simulation of load_unload procedure completed, CPU time=0.0 sec.
+//  Chain = chain0 successfully traced with scan_cells = 49.
+//  Chain = chain1 successfully traced with scan_cells = 49.
+//  Chain = chain2 successfully traced with scan_cells = 49.
+//  147 scan cells have been identified in 3 scan chains.
+//  Longest scan chain has 49 scan cells.
+//  ---------------------------------------------------------------------------
+//  Begin transparent latch checking for 3 latches.
+//  ---------------------------------------------------------------------------
+//  Number transparent latches = 3.
+//  ---------------------------------------------------------------------------
+//  Begin scan clock rules checking.
+//  ---------------------------------------------------------------------------
+//  1 scan clock/set/reset lines have been identified.
+//  All scan clocks successfully passed off-state check.
+//  Capture clock is set to clk_i.
+//  ---------------------------------------------------------------------------
+//  3 non-scan memory elements are identified.
+//  ---------------------------------------------------------------------------
+//  3 non-scan memory elements are identified as TLA. (D5)
+//  ---------------------------------------------------------------------------
+//  sub-command: report_scan_cells 
+ cell#   chain    memory_type     inv   gate#    shift_clock  inv  cell_name                      instance_name                     (ext. pin names)
+ -----  ------  ---------------  ----  -------  -----------------  ---------  ----------------------------------------------------  ----------------
+ 0      chain0  MASTER  (FF-LE)  FFFF     1661  /clk_i        F    SDFFQXL    /\fifo_reg[10][6]                   U$1/i0/mlc_dff    (SI,Q)          
+                TLA     (LA-AL)  ----     1760  /clk_i        T    TLATNXL    /ts_lockup_latchn_clkc1_intno48_i   U$1/i0/mlc_latch  (-,-)           
+ 1      chain0  MASTER  (FF-LE)  FFFF     1660  /clk_i        F    SDFFQXL    /\fifo_reg[1][4]                    U$1/i0/mlc_dff    (SI,Q)          
+ 2      chain0  MASTER  (FF-LE)  FFFF     1659  /clk_i        F    SDFFQXL    /\fifo_reg[10][5]                   U$1/i0/mlc_dff    (SI,Q)          
+ 3      chain0  MASTER  (FF-LE)  FFFF     1658  /clk_i        F    SDFFQXL    /\fifo_reg[10][4]                   U$1/i0/mlc_dff    (SI,Q)          
+ 4      chain0  MASTER  (FF-LE)  FFFF     1657  /clk_i        F    SDFFQXL    /\fifo_reg[1][2]                    U$1/i0/mlc_dff    (SI,Q)          
+ 5      chain0  MASTER  (FF-LE)  FFFF     1656  /clk_i        F    SDFFQXL    /\fifo_reg[10][2]                   U$1/i0/mlc_dff    (SI,Q)          
+ 6      chain0  MASTER  (FF-LE)  FFFF     1655  /clk_i        F    SDFFQXL    /\fifo_reg[10][1]                   U$1/i0/mlc_dff    (SI,Q)          
+ 7      chain0  MASTER  (FF-LE)  FFFF     1654  /clk_i        F    SDFFQXL    /\fifo_reg[1][3]                    U$1/i0/mlc_dff    (SI,Q)          
+ 8      chain0  MASTER  (FF-LE)  FFFF     1653  /clk_i        F    SDFFQXL    /\fifo_reg[10][0]                   U$1/i0/mlc_dff    (SI,Q)          
+ 9      chain0  MASTER  (FF-LE)  FFFF     1652  /clk_i        F    SDFFQXL    /\fifo_reg[14][2]                   U$1/i0/mlc_dff    (SI,Q)          
+ 10     chain0  MASTER  (FF-LE)  FFFF     1651  /clk_i        F    SDFFQXL    /\fifo_reg[3][4]                    U$1/i0/mlc_dff    (SI,Q)          
+ 11     chain0  MASTER  (FF-LE)  FFFF     1650  /clk_i        F    SDFFQXL    /\fifo_reg[1][6]                    U$1/i0/mlc_dff    (SI,Q)          
+ 12     chain0  MASTER  (FF-LE)  FFFF     1649  /clk_i        F    SDFFQXL    /\fifo_reg[5][7]                    U$1/i0/mlc_dff    (SI,Q)          
+ 13     chain0  MASTER  (FF-LE)  FFFF     1648  /clk_i        F    SDFFQXL    /\fifo_reg[10][3]                   U$1/i0/mlc_dff    (SI,Q)          
+ 14     chain0  MASTER  (FF-LE)  FFFF     1647  /clk_i        F    SDFFQXL    /\fifo_reg[7][0]                    U$1/i0/mlc_dff    (SI,Q)          
+ 15     chain0  MASTER  (FF-LE)  FFFF     1646  /clk_i        F    SDFFQXL    /\fifo_reg[11][4]                   U$1/i0/mlc_dff    (SI,Q)          
+ 16     chain0  MASTER  (FF-LE)  FFFF     1645  /clk_i        F    SDFFQXL    /\fifo_reg[12][3]                   U$1/i0/mlc_dff    (SI,Q)          
+ 17     chain0  MASTER  (FF-LE)  FFFF     1644  /clk_i        F    SDFFQXL    /\fifo_reg[8][0]                    U$1/i0/mlc_dff    (SI,Q)          
+ 18     chain0  MASTER  (FF-LE)  FFFF     1643  /clk_i        F    SDFFQXL    /\fifo_reg[8][7]                    U$1/i0/mlc_dff    (SI,Q)          
+ 19     chain0  MASTER  (FF-LE)  FFFF     1642  /clk_i        F    SDFFQXL    /\fifo_reg[8][6]                    U$1/i0/mlc_dff    (SI,Q)          
+ 20     chain0  MASTER  (FF-LE)  FFFF     1641  /clk_i        F    SDFFQXL    /\fifo_reg[8][5]                    U$1/i0/mlc_dff    (SI,Q)          
+ 21     chain0  MASTER  (FF-LE)  FFFF     1640  /clk_i        F    SDFFQXL    /\fifo_reg[8][4]                    U$1/i0/mlc_dff    (SI,Q)          
+ 22     chain0  MASTER  (FF-LE)  FFFF     1639  /clk_i        F    SDFFQXL    /\fifo_reg[8][3]                    U$1/i0/mlc_dff    (SI,Q)          
+ 23     chain0  MASTER  (FF-LE)  FFFF     1638  /clk_i        F    SDFFQXL    /\fifo_reg[8][2]                    U$1/i0/mlc_dff    (SI,Q)          
+ 24     chain0  MASTER  (FF-LE)  FFFF     1637  /clk_i        F    SDFFQXL    /\fifo_reg[8][1]                    U$1/i0/mlc_dff    (SI,Q)          
+ 25     chain0  MASTER  (FF-LE)  FFFF     1636  /clk_i        F    SDFFQXL    /\fifo_reg[12][7]                   U$1/i0/mlc_dff    (SI,Q)          
+ 26     chain0  MASTER  (FF-LE)  FFFF     1635  /clk_i        F    SDFFQXL    /\fifo_reg[12][6]                   U$1/i0/mlc_dff    (SI,Q)          
+ 27     chain0  MASTER  (FF-LE)  FFFF     1634  /clk_i        F    SDFFQXL    /\fifo_reg[12][5]                   U$1/i0/mlc_dff    (SI,Q)          
+ 28     chain0  MASTER  (FF-LE)  FFFF     1633  /clk_i        F    SDFFQXL    /\fifo_reg[12][4]                   U$1/i0/mlc_dff    (SI,Q)          
+ 29     chain0  MASTER  (FF-LE)  FFFF     1632  /clk_i        F    SDFFQXL    /rd_toggle_flag_reg                 U$1/i0/mlc_dff    (SI,Q)          
+ 30     chain0  MASTER  (FF-LE)  FFFF     1631  /clk_i        F    SDFFQXL    /\fifo_reg[4][0]                    U$1/i0/mlc_dff    (SI,Q)          
+ 31     chain0  MASTER  (FF-LE)  FFFF     1630  /clk_i        F    SDFFQXL    /\fifo_reg[12][2]                   U$1/i0/mlc_dff    (SI,Q)          
+ 32     chain0  MASTER  (FF-LE)  FFFF     1629  /clk_i        F    SDFFQXL    /\fifo_reg[12][1]                   U$1/i0/mlc_dff    (SI,Q)          
+ 33     chain0  MASTER  (FF-LE)  FFFF     1628  /clk_i        F    SDFFQXL    /\fifo_reg[12][0]                   U$1/i0/mlc_dff    (SI,Q)          
+ 34     chain0  MASTER  (FF-LE)  FFFF     1627  /clk_i        F    SDFFQXL    /\fifo_reg[4][7]                    U$1/i0/mlc_dff    (SI,Q)          
+ 35     chain0  MASTER  (FF-LE)  FFFF     1626  /clk_i        F    SDFFQXL    /\fifo_reg[4][1]                    U$1/i0/mlc_dff    (SI,Q)          
+ 36     chain0  MASTER  (FF-LE)  FFFF     1625  /clk_i        F    SDFFQXL    /\fifo_reg[4][5]                    U$1/i0/mlc_dff    (SI,Q)          
+ 37     chain0  MASTER  (FF-LE)  FFFF     1624  /clk_i        F    SDFFQXL    /\fifo_reg[4][4]                    U$1/i0/mlc_dff    (SI,Q)          
+ 38     chain0  MASTER  (FF-LE)  FFFF     1623  /clk_i        F    SDFFQXL    /\fifo_reg[4][3]                    U$1/i0/mlc_dff    (SI,Q)          
+ 39     chain0  MASTER  (FF-LE)  FFFF     1622  /clk_i        F    SDFFQXL    /\fifo_reg[4][2]                    U$1/i0/mlc_dff    (SI,Q)          
+ 40     chain0  MASTER  (FF-LE)  FFFF     1621  /clk_i        F    SDFFQXL    /\fifo_reg[4][6]                    U$1/i0/mlc_dff    (SI,Q)          
+ 41     chain0  MASTER  (FF-LE)  FFFF     1620  /clk_i        F    SDFFHQX8   /\rd_data_o_reg[2]                  U$1/i0/mlc_dff    (SI,Q)          
+ 42     chain0  MASTER  (FF-LE)  FFFF     1619  /clk_i        F    SDFFHQX8   /\rd_data_o_reg[7]                  U$1/i0/mlc_dff    (SI,Q)          
+ 43     chain0  MASTER  (FF-LE)  FFFF     1618  /clk_i        F    SDFFHQX8   /\rd_data_o_reg[5]                  U$1/i0/mlc_dff    (SI,Q)          
+ 44     chain0  MASTER  (FF-LE)  FFFF     1617  /clk_i        F    SDFFHQX8   /\rd_data_o_reg[4]                  U$1/i0/mlc_dff    (SI,Q)          
+ 45     chain0  MASTER  (FF-LE)  FFFF     1616  /clk_i        F    SDFFHQX8   /\rd_data_o_reg[3]                  U$1/i0/mlc_dff    (SI,Q)          
+ 46     chain0  MASTER  (FF-LE)  FFFF     1615  /clk_i        F    SDFFHQX8   /\rd_data_o_reg[1]                  U$1/i0/mlc_dff    (SI,Q)          
+ 47     chain0  MASTER  (FF-LE)  FFFF     1614  /clk_i        F    SDFFHQX8   /\rd_data_o_reg[6]                  U$1/i0/mlc_dff    (SI,Q)          
+ 48     chain0  MASTER  (FF-LE)  FFFF     1613  /clk_i        F    SDFFHQX8   /\rd_data_o_reg[0]                  U$1/i0/mlc_dff    (SI,Q)          
+ 0      chain1  MASTER  (FF-LE)  FFFF     1710  /clk_i        F    SDFFQXL    /\fifo_reg[7][6]                    U$1/i0/mlc_dff    (SI,Q)          
+                TLA     (LA-AL)  ----     1761  /clk_i        T    TLATNXL    /ts_lockup_latchn_clkc2_intno97_i   U$1/i0/mlc_latch  (-,-)           
+ 1      chain1  MASTER  (FF-LE)  FFFF     1709  /clk_i        F    SDFFQXL    /\fifo_reg[3][0]                    U$1/i0/mlc_dff    (SI,Q)          
+ 2      chain1  MASTER  (FF-LE)  FFFF     1708  /clk_i        F    SDFFQXL    /\fifo_reg[0][5]                    U$1/i0/mlc_dff    (SI,Q)          
+ 3      chain1  MASTER  (FF-LE)  FFFF     1707  /clk_i        F    SDFFQXL    /\fifo_reg[7][5]                    U$1/i0/mlc_dff    (SI,Q)          
+ 4      chain1  MASTER  (FF-LE)  FFFF     1706  /clk_i        F    SDFFQXL    /\fifo_reg[7][4]                    U$1/i0/mlc_dff    (SI,Q)          
+ 5      chain1  MASTER  (FF-LE)  FFFF     1705  /clk_i        F    SDFFQXL    /\fifo_reg[7][3]                    U$1/i0/mlc_dff    (SI,Q)          
+ 6      chain1  MASTER  (FF-LE)  FFFF     1704  /clk_i        F    SDFFQXL    /\fifo_reg[13][1]                   U$1/i0/mlc_dff    (SI,Q)          
+ 7      chain1  MASTER  (FF-LE)  FFFF     1703  /clk_i        F    SDFFQXL    /\fifo_reg[7][2]                    U$1/i0/mlc_dff    (SI,Q)          
+ 8      chain1  MASTER  (FF-LE)  FFFF     1702  /clk_i        F    SDFFQXL    /\fifo_reg[2][6]                    U$1/i0/mlc_dff    (SI,Q)          
+ 9      chain1  MASTER  (FF-LE)  FFFF     1701  /clk_i        F    SDFFQXL    /\fifo_reg[7][1]                    U$1/i0/mlc_dff    (SI,Q)          
+ 10     chain1  MASTER  (FF-LE)  FFFF     1700  /clk_i        F    SDFFQXL    /\fifo_reg[2][5]                    U$1/i0/mlc_dff    (SI,Q)          
+ 11     chain1  MASTER  (FF-LE)  FFFF     1699  /clk_i        F    SDFFQXL    /\fifo_reg[0][6]                    U$1/i0/mlc_dff    (SI,Q)          
+ 12     chain1  MASTER  (FF-LE)  FFFF     1698  /clk_i        F    SDFFQXL    /\fifo_reg[9][3]                    U$1/i0/mlc_dff    (SI,Q)          
+ 13     chain1  MASTER  (FF-LE)  FFFF     1697  /clk_i        F    SDFFQXL    /\fifo_reg[0][0]                    U$1/i0/mlc_dff    (SI,Q)          
+ 14     chain1  MASTER  (FF-LE)  FFFF     1696  /clk_i        F    SDFFQXL    /\fifo_reg[6][1]                    U$1/i0/mlc_dff    (SI,Q)          
+ 15     chain1  MASTER  (FF-LE)  FFFF     1695  /clk_i        F    SDFFQXL    /\fifo_reg[6][0]                    U$1/i0/mlc_dff    (SI,Q)          
+ 16     chain1  MASTER  (FF-LE)  FFFF     1694  /clk_i        F    SDFFQXL    /\fifo_reg[14][0]                   U$1/i0/mlc_dff    (SI,Q)          
+ 17     chain1  MASTER  (FF-LE)  FFFF     1693  /clk_i        F    SDFFQXL    /\fifo_reg[13][7]                   U$1/i0/mlc_dff    (SI,Q)          
+ 18     chain1  MASTER  (FF-LE)  FFFF     1692  /clk_i        F    SDFFQXL    /\fifo_reg[2][1]                    U$1/i0/mlc_dff    (SI,Q)          
+ 19     chain1  MASTER  (FF-LE)  FFFF     1691  /clk_i        F    SDFFQXL    /\fifo_reg[13][5]                   U$1/i0/mlc_dff    (SI,Q)          
+ 20     chain1  MASTER  (FF-LE)  FFFF     1690  /clk_i        F    SDFFQXL    /\fifo_reg[13][4]                   U$1/i0/mlc_dff    (SI,Q)          
+ 21     chain1  MASTER  (FF-LE)  FFFF     1689  /clk_i        F    SDFFQXL    /\fifo_reg[13][3]                   U$1/i0/mlc_dff    (SI,Q)          
+ 22     chain1  MASTER  (FF-LE)  FFFF     1688  /clk_i        F    SDFFQXL    /\fifo_reg[5][6]                    U$1/i0/mlc_dff    (SI,Q)          
+ 23     chain1  MASTER  (FF-LE)  FFFF     1687  /clk_i        F    SDFFQXL    /\fifo_reg[13][2]                   U$1/i0/mlc_dff    (SI,Q)          
+ 24     chain1  MASTER  (FF-LE)  FFFF     1686  /clk_i        F    SDFFQXL    /\fifo_reg[11][6]                   U$1/i0/mlc_dff    (SI,Q)          
+ 25     chain1  MASTER  (FF-LE)  FFFF     1685  /clk_i        F    SDFFQXL    /\fifo_reg[13][0]                   U$1/i0/mlc_dff    (SI,Q)          
+ 26     chain1  MASTER  (FF-LE)  FFFF     1684  /clk_i        F    SDFFQXL    /\fifo_reg[5][5]                    U$1/i0/mlc_dff    (SI,Q)          
+ 27     chain1  MASTER  (FF-LE)  FFFF     1683  /clk_i        F    SDFFQXL    /\fifo_reg[5][4]                    U$1/i0/mlc_dff    (SI,Q)          
+ 28     chain1  MASTER  (FF-LE)  FFFF     1682  /clk_i        F    SDFFQXL    /\fifo_reg[2][0]                    U$1/i0/mlc_dff    (SI,Q)          
+ 29     chain1  MASTER  (FF-LE)  FFFF     1681  /clk_i        F    SDFFQXL    /\fifo_reg[0][1]                    U$1/i0/mlc_dff    (SI,Q)          
+ 30     chain1  MASTER  (FF-LE)  FFFF     1680  /clk_i        F    SDFFQXL    /\fifo_reg[5][3]                    U$1/i0/mlc_dff    (SI,Q)          
+ 31     chain1  MASTER  (FF-LE)  FFFF     1679  /clk_i        F    SDFFQXL    /\fifo_reg[1][7]                    U$1/i0/mlc_dff    (SI,Q)          
+ 32     chain1  MASTER  (FF-LE)  FFFF     1678  /clk_i        F    SDFFQXL    /\fifo_reg[5][2]                    U$1/i0/mlc_dff    (SI,Q)          
+ 33     chain1  MASTER  (FF-LE)  FFFF     1677  /clk_i        F    SDFFQXL    /\fifo_reg[5][1]                    U$1/i0/mlc_dff    (SI,Q)          
+ 34     chain1  MASTER  (FF-LE)  FFFF     1676  /clk_i        F    SDFFQXL    /\fifo_reg[14][1]                   U$1/i0/mlc_dff    (SI,Q)          
+ 35     chain1  MASTER  (FF-LE)  FFFF     1675  /clk_i        F    SDFFQXL    /\fifo_reg[5][0]                    U$1/i0/mlc_dff    (SI,Q)          
+ 36     chain1  MASTER  (FF-LE)  FFFF     1674  /clk_i        F    SDFFQXL    /\fifo_reg[11][7]                   U$1/i0/mlc_dff    (SI,Q)          
+ 37     chain1  MASTER  (FF-LE)  FFFF     1673  /clk_i        F    SDFFQXL    /\fifo_reg[11][5]                   U$1/i0/mlc_dff    (SI,Q)          
+ 38     chain1  MASTER  (FF-LE)  FFFF     1672  /clk_i        F    SDFFQXL    /\fifo_reg[10][7]                   U$1/i0/mlc_dff    (SI,Q)          
+ 39     chain1  MASTER  (FF-LE)  FFFF     1671  /clk_i        F    SDFFQXL    /\fifo_reg[14][6]                   U$1/i0/mlc_dff    (SI,Q)          
+ 40     chain1  MASTER  (FF-LE)  FFFF     1670  /clk_i        F    SDFFQXL    /\fifo_reg[11][3]                   U$1/i0/mlc_dff    (SI,Q)          
+ 41     chain1  MASTER  (FF-LE)  FFFF     1669  /clk_i        F    SDFFQXL    /\fifo_reg[1][5]                    U$1/i0/mlc_dff    (SI,Q)          
+ 42     chain1  MASTER  (FF-LE)  FFFF     1668  /clk_i        F    SDFFQXL    /\fifo_reg[2][7]                    U$1/i0/mlc_dff    (SI,Q)          
+ 43     chain1  MASTER  (FF-LE)  FFFF     1667  /clk_i        F    SDFFQXL    /\fifo_reg[11][2]                   U$1/i0/mlc_dff    (SI,Q)          
+ 44     chain1  MASTER  (FF-LE)  FFFF     1666  /clk_i        F    SDFFQXL    /\fifo_reg[11][1]                   U$1/i0/mlc_dff    (SI,Q)          
+ 45     chain1  MASTER  (FF-LE)  FFFF     1665  /clk_i        F    SDFFQXL    /\fifo_reg[11][0]                   U$1/i0/mlc_dff    (SI,Q)          
+ 46     chain1  MASTER  (FF-LE)  FFFF     1664  /clk_i        F    SDFFQXL    /\fifo_reg[3][3]                    U$1/i0/mlc_dff    (SI,Q)          
+ 47     chain1  MASTER  (FF-LE)  FFFF     1663  /clk_i        F    SDFFQXL    /\fifo_reg[13][6]                   U$1/i0/mlc_dff    (SI,Q)          
+ 48     chain1  MASTER  (FF-LE)  FFFF     1662  /clk_i        F    SDFFQXL    /\fifo_reg[0][4]                    U$1/i0/mlc_dff    (SI,Q)          
+ 0      chain2  MASTER  (FF-LE)  FFFF     1759  /clk_i        F    SDFFHQX8   /error_o_reg                        U$1/i0/mlc_dff    (SI,Q)          
+                TLA     (LA-AL)  ----     1762  /clk_i        T    TLATNXL    /ts_lockup_latchn_clkc3_intno146_i  U$1/i0/mlc_latch  (-,-)           
+ 1      chain2  MASTER  (FF-LE)  FFFF     1758  /clk_i        F    SDFFHQX1   /\wr_ptr_reg[2]                     U$1/i0/mlc_dff    (SI,Q)          
+ 2      chain2  MASTER  (FF-LE)  FFFF     1757  /clk_i        F    SDFFHQX1   /\wr_ptr_reg[3]                     U$1/i0/mlc_dff    (SI,Q)          
+ 3      chain2  MASTER  (FF-LE)  FFFF     1756  /clk_i        F    SDFFHQX1   /\wr_ptr_reg[1]                     U$1/i0/mlc_dff    (SI,Q)          
+ 4      chain2  MASTER  (FF-LE)  FFFF     1755  /clk_i        F    SDFFHQX1   /\wr_ptr_reg[0]                     U$1/i0/mlc_dff    (SI,Q)          
+ 5      chain2  MASTER  (FF-LE)  FFFF     1754  /clk_i        F    SDFFHQX1   /\rd_ptr_reg[0]                     U$1/i0/mlc_dff    (SI,Q)          
+ 6      chain2  MASTER  (FF-LE)  FFFF     1753  /clk_i        F    SDFFHQX1   /\rd_ptr_reg[1]                     U$1/i0/mlc_dff    (SI,Q)          
+ 7      chain2  MASTER  (FF-LE)  FFFF     1752  /clk_i        F    SDFFHQX1   /\rd_ptr_reg[2]                     U$1/i0/mlc_dff    (SI,Q)          
+ 8      chain2  MASTER  (FF-LE)  FFFF     1751  /clk_i        F    SDFFHQX1   /\rd_ptr_reg[3]                     U$1/i0/mlc_dff    (SI,Q)          
+ 9      chain2  MASTER  (FF-LE)  FFFF     1750  /clk_i        F    SDFFQXL    /\fifo_reg[7][7]                    U$1/i0/mlc_dff    (SI,Q)          
+ 10     chain2  MASTER  (FF-LE)  FFFF     1749  /clk_i        F    SDFFQXL    /\fifo_reg[9][6]                    U$1/i0/mlc_dff    (SI,Q)          
+ 11     chain2  MASTER  (FF-LE)  FFFF     1748  /clk_i        F    SDFFQXL    /\fifo_reg[6][7]                    U$1/i0/mlc_dff    (SI,Q)          
+ 12     chain2  MASTER  (FF-LE)  FFFF     1747  /clk_i        F    SDFFQXL    /\fifo_reg[14][5]                   U$1/i0/mlc_dff    (SI,Q)          
+ 13     chain2  MASTER  (FF-LE)  FFFF     1746  /clk_i        F    SDFFQXL    /\fifo_reg[15][3]                   U$1/i0/mlc_dff    (SI,Q)          
+ 14     chain2  MASTER  (FF-LE)  FFFF     1745  /clk_i        F    SDFFQXL    /\fifo_reg[1][1]                    U$1/i0/mlc_dff    (SI,Q)          
+ 15     chain2  MASTER  (FF-LE)  FFFF     1744  /clk_i        F    SDFFQXL    /\fifo_reg[6][6]                    U$1/i0/mlc_dff    (SI,Q)          
+ 16     chain2  MASTER  (FF-LE)  FFFF     1743  /clk_i        F    SDFFQXL    /\fifo_reg[6][5]                    U$1/i0/mlc_dff    (SI,Q)          
+ 17     chain2  MASTER  (FF-LE)  FFFF     1742  /clk_i        F    SDFFQXL    /\fifo_reg[2][4]                    U$1/i0/mlc_dff    (SI,Q)          
+ 18     chain2  MASTER  (FF-LE)  FFFF     1741  /clk_i        F    SDFFQXL    /\fifo_reg[0][3]                    U$1/i0/mlc_dff    (SI,Q)          
+ 19     chain2  MASTER  (FF-LE)  FFFF     1740  /clk_i        F    SDFFQXL    /\fifo_reg[6][4]                    U$1/i0/mlc_dff    (SI,Q)          
+ 20     chain2  MASTER  (FF-LE)  FFFF     1739  /clk_i        F    SDFFQXL    /\fifo_reg[14][7]                   U$1/i0/mlc_dff    (SI,Q)          
+ 21     chain2  MASTER  (FF-LE)  FFFF     1738  /clk_i        F    SDFFQXL    /\fifo_reg[2][3]                    U$1/i0/mlc_dff    (SI,Q)          
+ 22     chain2  MASTER  (FF-LE)  FFFF     1737  /clk_i        F    SDFFQXL    /\fifo_reg[15][7]                   U$1/i0/mlc_dff    (SI,Q)          
+ 23     chain2  MASTER  (FF-LE)  FFFF     1736  /clk_i        F    SDFFQXL    /wr_toggle_flag_reg                 U$1/i0/mlc_dff    (SI,Q)          
+ 24     chain2  MASTER  (FF-LE)  FFFF     1735  /clk_i        F    SDFFQXL    /\fifo_reg[15][4]                   U$1/i0/mlc_dff    (SI,Q)          
+ 25     chain2  MASTER  (FF-LE)  FFFF     1734  /clk_i        F    SDFFQXL    /\fifo_reg[15][2]                   U$1/i0/mlc_dff    (SI,Q)          
+ 26     chain2  MASTER  (FF-LE)  FFFF     1733  /clk_i        F    SDFFQXL    /\fifo_reg[15][6]                   U$1/i0/mlc_dff    (SI,Q)          
+ 27     chain2  MASTER  (FF-LE)  FFFF     1732  /clk_i        F    SDFFQXL    /\fifo_reg[15][0]                   U$1/i0/mlc_dff    (SI,Q)          
+ 28     chain2  MASTER  (FF-LE)  FFFF     1731  /clk_i        F    SDFFQXL    /\fifo_reg[15][1]                   U$1/i0/mlc_dff    (SI,Q)          
+ 29     chain2  MASTER  (FF-LE)  FFFF     1730  /clk_i        F    SDFFQXL    /\fifo_reg[15][5]                   U$1/i0/mlc_dff    (SI,Q)          
+ 30     chain2  MASTER  (FF-LE)  FFFF     1729  /clk_i        F    SDFFQXL    /\fifo_reg[6][2]                    U$1/i0/mlc_dff    (SI,Q)          
+ 31     chain2  MASTER  (FF-LE)  FFFF     1728  /clk_i        F    SDFFQXL    /\fifo_reg[14][4]                   U$1/i0/mlc_dff    (SI,Q)          
+ 32     chain2  MASTER  (FF-LE)  FFFF     1727  /clk_i        F    SDFFQXL    /\fifo_reg[9][7]                    U$1/i0/mlc_dff    (SI,Q)          
+ 33     chain2  MASTER  (FF-LE)  FFFF     1726  /clk_i        F    SDFFQXL    /\fifo_reg[2][2]                    U$1/i0/mlc_dff    (SI,Q)          
+ 34     chain2  MASTER  (FF-LE)  FFFF     1725  /clk_i        F    SDFFQXL    /\fifo_reg[0][2]                    U$1/i0/mlc_dff    (SI,Q)          
+ 35     chain2  MASTER  (FF-LE)  FFFF     1724  /clk_i        F    SDFFQXL    /\fifo_reg[9][5]                    U$1/i0/mlc_dff    (SI,Q)          
+ 36     chain2  MASTER  (FF-LE)  FFFF     1723  /clk_i        F    SDFFQXL    /\fifo_reg[3][7]                    U$1/i0/mlc_dff    (SI,Q)          
+ 37     chain2  MASTER  (FF-LE)  FFFF     1722  /clk_i        F    SDFFQXL    /\fifo_reg[9][4]                    U$1/i0/mlc_dff    (SI,Q)          
+ 38     chain2  MASTER  (FF-LE)  FFFF     1721  /clk_i        F    SDFFQXL    /\fifo_reg[9][2]                    U$1/i0/mlc_dff    (SI,Q)          
+ 39     chain2  MASTER  (FF-LE)  FFFF     1720  /clk_i        F    SDFFQXL    /\fifo_reg[6][3]                    U$1/i0/mlc_dff    (SI,Q)          
+ 40     chain2  MASTER  (FF-LE)  FFFF     1719  /clk_i        F    SDFFQXL    /\fifo_reg[3][6]                    U$1/i0/mlc_dff    (SI,Q)          
+ 41     chain2  MASTER  (FF-LE)  FFFF     1718  /clk_i        F    SDFFQXL    /\fifo_reg[9][0]                    U$1/i0/mlc_dff    (SI,Q)          
+ 42     chain2  MASTER  (FF-LE)  FFFF     1717  /clk_i        F    SDFFQXL    /\fifo_reg[3][5]                    U$1/i0/mlc_dff    (SI,Q)          
+ 43     chain2  MASTER  (FF-LE)  FFFF     1716  /clk_i        F    SDFFQXL    /\fifo_reg[1][0]                    U$1/i0/mlc_dff    (SI,Q)          
+ 44     chain2  MASTER  (FF-LE)  FFFF     1715  /clk_i        F    SDFFQXL    /\fifo_reg[9][1]                    U$1/i0/mlc_dff    (SI,Q)          
+ 45     chain2  MASTER  (FF-LE)  FFFF     1714  /clk_i        F    SDFFQXL    /\fifo_reg[3][2]                    U$1/i0/mlc_dff    (SI,Q)          
+ 46     chain2  MASTER  (FF-LE)  FFFF     1713  /clk_i        F    SDFFQXL    /\fifo_reg[3][1]                    U$1/i0/mlc_dff    (SI,Q)          
+ 47     chain2  MASTER  (FF-LE)  FFFF     1712  /clk_i        F    SDFFQXL    /\fifo_reg[14][3]                   U$1/i0/mlc_dff    (SI,Q)          
+ 48     chain2  MASTER  (FF-LE)  FFFF     1711  /clk_i        F    SDFFQXL    /\fifo_reg[0][7]                    U$1/i0/mlc_dff    (SI,Q)          
+
+//  sub-command: add_faults -all 
+//  sub-command: create_patterns 
+// | ------------------------------------------------------------------------------------------------------------------ |
+// |                                             Analyzing the design                                                   |
+// |                                                                                                                    |
+// |      Current clock restriction setting:     Domain_clock (edge interaction)                                        |
+// |                                             (optimal)                                                              |
+// |                                                                                                                    |
+// |            Current abort limit setting:     30                                                                     |
+// |                                Calling:     set_abort_limit 300 100                                                |
+// | ------------------------------------------------------------------------------------------------------------------ |
+// |                                                                                                                    |
+// |               Current sequential depth:     0 (optimal)                                                            |
+// |                                                                                                                    |
+// | ------------------------------------------------------------------------------------------------------------------ |
+//  ------------------------------------------------------------------------
+//  Simulation performed for #gates = 1776  #faults = 3532
+//  system mode = analysis    pattern source = internal patterns
+//  ------------------------------------------------------------------------
+//  #patterns  test      #faults  #faults    # eff.    # test         process      RE/AU/AAB
+//  simulated  coverage  in list  detected   patterns  patterns       CPU time
+//   ---        ------      ---       ---      ---       ---          1.20 sec     0/0/0
+//   64         96.07%      181      3351       54        54          1.22 sec
+//   ---        ------      ---       ---      ---       ---          1.23 sec     0/0/0
+//   66         96.61%      156        25        2        56          1.24 sec
+//   ---        ------      ---       ---      ---       ---          1.24 sec     0/0/0
+//   101       100.00%        0       156       32        88          1.24 sec
+
+           Statistics Report          
+            Stuck-at Faults           
+--------------------------------------
+Fault Classes               #faults   
+                            (total)   
+----------------------  --------------
+  FU (full)                  4612     
+  --------------------  --------------
+  DS (det_simulation)    3532 (76.58%)
+  DI (det_implication)   1074 (23.29%)
+  UU (unused)               6 ( 0.13%)
+--------------------------------------
+Coverage                              
+  --------------------                
+  test_coverage               100.00% 
+  fault_coverage               99.87% 
+  atpg_effectiveness          100.00% 
+--------------------------------------
+#test_patterns                     88 
+#simulated_patterns               101 
+CPU_time (secs)                  13.9 
+--------------------------------------
+
+//  sub-command: report_statistics 
+           Statistics Report          
+            Stuck-at Faults           
+--------------------------------------
+Fault Classes               #faults   
+                            (total)   
+----------------------  --------------
+  FU (full)                  4612     
+  --------------------  --------------
+  DS (det_simulation)    3532 (76.58%)
+  DI (det_implication)   1074 (23.29%)
+  UU (unused)               6 ( 0.13%)
+--------------------------------------
+Coverage                              
+  --------------------                
+  test_coverage               100.00% 
+  fault_coverage               99.87% 
+  atpg_effectiveness          100.00% 
+--------------------------------------
+#test_patterns                     88 
+#simulated_patterns               101 
+CPU_time (secs)                  13.9 
+--------------------------------------
+
+//  sub-command: report_faults -summary 
+           Statistics Report          
+            Stuck-at Faults           
+--------------------------------------
+Fault Classes               #faults   
+                            (total)   
+----------------------  --------------
+  FU (full)                  4612     
+  --------------------  --------------
+  DS (det_simulation)    3532 (76.58%)
+  DI (det_implication)   1074 (23.29%)
+  UU (unused)               6 ( 0.13%)
+--------------------------------------
+Coverage                              
+  --------------------                
+  test_coverage               100.00% 
+  fault_coverage               99.87% 
+  atpg_effectiveness          100.00% 
+--------------------------------------
+#test_patterns                     88 
+#simulated_patterns               101 
+CPU_time (secs)                  13.9 
+--------------------------------------
+
+//  sub-command: write_patterns outputs/patterns_ascii.v -Verilog -rep 
+//  sub-command: exit 

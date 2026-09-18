@@ -1,0 +1,69 @@
+//--------------------------------------------------------------------------------
+//
+//  Unpublished work. Copyright 2022 Siemens
+//
+//  This material contains trade secrets or otherwise confidential 
+//  information owned by Siemens Industry Software Inc. or its affiliates 
+//  (collectively, SISW), or its licensors. Access to and use of this 
+//  information is strictly limited as set forth in the Customer's 
+//  applicable agreements with SISW.
+//
+//--------------------------------------------------------------------------------
+//  File created by: Tessent Shell
+//          Version: 2022.4
+//       Created on: Fri Sep 18 11:53:46 IST 2026
+//--------------------------------------------------------------------------------
+
+
+// Define the instance names of the decompressor, compactor, and the container
+// module which instantiates the decompressor and compactor.
+// Locating those instances in the design allows DRC to provide more debug
+// information in the event of a violation.
+// If multiple instances exist with the same name, substitute the instance name
+// of the container module with the instance's hierarchical path name.
+
+set_edt_instances -edt_logic_top sync_fifo_edt_i
+set_edt_instances -decompressor  sync_fifo_edt_decompressor_i
+set_edt_instances -compactor     sync_fifo_edt_compactor_i
+
+
+add_scan_groups grp1 edt/created_edt.testproc
+add_scan_chains -internal chain0 grp1 {/sync_fifo_i/ts_si[0]} {/sync_fifo_i/ts_so[0]}
+add_scan_chains -internal chain1 grp1 {/sync_fifo_i/ts_si[1]} {/sync_fifo_i/ts_so[1]}
+add_scan_chains -internal chain2 grp1 {/sync_fifo_i/ts_si[2]} {/sync_fifo_i/ts_so[2]}
+
+add_clocks 0 clk_i
+add_clocks 0 edt_clock
+
+add_pin_constraints edt_clock C0
+
+
+// EDT settings.  Please do not modify.
+// Inconsistency between the EDT settings and the EDT logic may
+// lead to DRC violations and invalid patterns.
+
+set_edt_options -channels 3 -bypass_chains 3 -initialization_cycles 8  -bypass_logic on -clocking edge -longest_chain_range 2 49 -reset_signal off -pulse_edt_before_shift_clocks off -ip_version 8 -decompressor_size 16 -injectors_per_channel 2 -scan_chains 3 -xor_taps_per_chain 3 -compactor_type xpress -lockup on -retime_chain_boundaries off -bypass_chain_change_edge on
+
+set_decompressor_connections -channel 1 -taps 1  12 
+set_decompressor_connections -channel 2 -taps 4  9 
+set_decompressor_connections -channel 3 -taps 7  15 
+set_edt_pins output_channels -compactor_pipeline_stages 0
+set_decompressor_connections -chain chain0 -taps 7 9 10
+set_decompressor_connections -chain chain1 -taps 2 5 14
+set_decompressor_connections -chain chain2 -taps 4 11 16
+
+set_bypass_chains -bypass_chain_number 1 -edt_chains chain0
+set_bypass_chains -bypass_chain_number 2 -edt_chains chain1
+set_bypass_chains -bypass_chain_number 3 -edt_chains chain2
+
+set_mask_register -input_channel_mask_register_sizes   1 2   2 1   3 1
+                                                       
+set_mask_decoder_connection -mode_bit            1 2   
+set_mask_decoder_connection -1hot_decoder 1      1 1   
+set_mask_decoder_connection -xor_decoder chain0  1 1   
+                                                       
+set_mask_decoder_connection -1hot_decoder 2      2 1   
+set_mask_decoder_connection -xor_decoder chain1  2 1   
+                                                       
+set_mask_decoder_connection -1hot_decoder 3      3 1   
+set_mask_decoder_connection -xor_decoder chain2  3 1   

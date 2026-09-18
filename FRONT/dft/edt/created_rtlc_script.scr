@@ -1,0 +1,62 @@
+#--------------------------------------------------------------------------------
+#
+#  Unpublished work. Copyright 2022 Siemens
+#
+#  This material contains trade secrets or otherwise confidential 
+#  information owned by Siemens Industry Software Inc. or its affiliates 
+#  (collectively, SISW), or its licensors. Access to and use of this 
+#  information is strictly limited as set forth in the Customer's 
+#  applicable agreements with SISW.
+#
+#--------------------------------------------------------------------------------
+#  File created by: Tessent Shell
+#          Version: 2022.4
+#       Created on: Fri Sep 18 11:53:46 IST 2026
+#--------------------------------------------------------------------------------
+
+
+# Cadence RTL Compiler synthesis script for created_edt_top.v
+
+set_attribute library {libs/slow_vdd1v0_basicCells.lib}
+
+# Read input design files 
+read_hdl -v2001 edt/created_core_blackbox.v
+read_hdl -v2001 edt/created_edt.v
+read_hdl -v2001 edt/created_edt_top.v
+
+# Elaborate design 
+set_attribute hdl_infer_unresolved_from_logic_abstract true /
+elaborate
+
+cd /designs/sync_fifo_edt_top
+
+# Check design for inconsistencies 
+check_design
+
+# Timing specification 
+define_clock -period 10000 -rise 0 -fall 50 edt_clock
+
+# Avoid clock buffering during synthesis. However, remember 
+# to perform clock tree synthesis later for edt_clock 
+set_attribute ideal_network true edt_clock
+
+# Avoid assign statements in the synthesized netlist. 
+set_attribute remove_assigns true sync_fifo_edt_top
+set_remove_assign_options -preserve_dangling_nets -respect_boundary_optimization -verbose -design sync_fifo_edt_top
+
+# Compile design 
+edit_netlist uniquify sync_fifo_edt_top
+synthesize -to_mapped -effort medium
+
+# Report design results for EDT IP 
+report area > edt/created_rtlc_script_report.out
+report design_rules >> edt/created_rtlc_script_report.out
+report timing >> edt/created_rtlc_script_report.out
+report gates >> edt/created_rtlc_script_report.out
+
+# Read in the original core netlist 
+read_hdl -v2001 outputs/fifo_scan.v
+elaborate
+
+# Write output netlist 
+write_hdl > edt/created_edt_top_gate.v

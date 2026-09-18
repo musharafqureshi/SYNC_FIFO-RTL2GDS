@@ -1,0 +1,161 @@
+//  sub-command: set_context dft -edt 
+//  sub-command: read_verilog outputs/fifo_scan.v 
+//  sub-command: read_cell_library libs/slow_vdd1v0.mdt 
+//  Reading DFT Library file libs/slow_vdd1v0.mdt
+//  Finished reading file libs/slow_vdd1v0.mdt
+//  sub-command: set_current_design sync_fifo 
+//  Warning: 57 cases: Unused net in DFT library model
+//  Note: Issue set_current_design with the -show_elaboration_warnings option to see more details about previous warnings
+//  sub-command: add_black_boxes -auto 
+//  sub-command: dofile outputs/fifo_scan_testproc.dofile 
+//  command: #
+//  command: #  Written by Tessent Shell 2022.4 on Fri Sep 18 11:49:46 IST 2026
+//  command: #
+//  command: proc tessent_scan_common {} {
+//              add_clocks 0 clk_i
+//           }
+//  command: proc tessent_scan_int_mode_mode {} {
+//              add_scan_groups grp1 outputs/fifo_scan_testproc.testproc
+//           
+//              add_scan_chains chain0 grp1 {/ts_si[0]} {/ts_so[0]}
+//              add_scan_chains chain1 grp1 {/ts_si[1]} {/ts_so[1]}
+//              add_scan_chains chain2 grp1 {/ts_si[2]} {/ts_so[2]}
+//           
+//              tessent_scan_common
+//           
+//           }
+//  command: proc tessent_scan_setup { {mode int_mode} } {
+//              switch -exact -- $mode {
+//                 int_mode { tessent_scan_int_mode_mode }
+//                 default {
+//                    display_message -error "invalid scan mode: $mode"
+//                 }
+//              }
+//           }
+//  sub-command: add_scan_groups grp1 outputs/fifo_scan_testproc.testproc 
+//  sub-command: add_scan_chains chain0 grp1 /ts_si[0] /ts_so[0] 
+//  sub-command: add_scan_chains chain1 grp1 /ts_si[1] /ts_so[1] 
+//  sub-command: add_scan_chains chain2 grp1 /ts_si[2] /ts_so[2] 
+//  sub-command: add_clocks 0 clk_i 
+//  sub-command: set_edt_options -channels 3 
+//  sub-command: check_design_rules 
+//  Flattening process completed, cell instances=499, gates=1776, PIs=16, POs=14, CPU time=0.01 sec.
+//  ---------------------------------------------------------------------------
+//  Begin circuit learning analyses.
+//  --------------------------------
+//  Learning completed, CPU time=0.01 sec.
+//  ---------------------------------------------------------------------------
+//  Begin scan chain identification process, memory elements = 150.
+//  ---------------------------------------------------------------------------
+//  Reading group test procedure file outputs/fifo_scan_testproc.testproc.
+//  Begin simulation of load_unload procedure.
+//  Simulation of load_unload procedure completed, CPU time=0.0 sec.
+//  Chain = chain0 successfully traced with scan_cells = 49.
+//  Chain = chain1 successfully traced with scan_cells = 49.
+//  Chain = chain2 successfully traced with scan_cells = 49.
+//  147 scan cells have been identified in 3 scan chains.
+//  Longest scan chain has 49 scan cells.
+//  ---------------------------------------------------------------------------
+//  Begin EDT setup and rules checking.
+//  ---------------------------------------------------------------------------
+//  Running EDT IP Creation Phase.
+//  9 pins will be added to the EDT wrapper. (K13)
+//  Warning: Compression per pattern (0.86) not greater than 1.
+//  EDT setup and rules checking completed, CPU time=0.01 sec.
+//  All scan input pins were forced to TIE-X.
+//  All scan output pins were masked.
+//  ---------------------------------------------------------------------------
+//  Begin transparent latch checking for 3 latches.
+//  ---------------------------------------------------------------------------
+//  Number transparent latches = 3.
+//  ---------------------------------------------------------------------------
+//  Begin scan clock rules checking.
+//  ---------------------------------------------------------------------------
+//  1 scan clock/set/reset lines have been identified.
+//  All scan clocks successfully passed off-state check.
+//  Capture clock is set to clk_i.
+//  ---------------------------------------------------------------------------
+//  3 non-scan memory elements are identified.
+//  ---------------------------------------------------------------------------
+//  3 non-scan memory elements are identified as TLA. (D5)
+//  ---------------------------------------------------------------------------
+//  3 gates may have an observable X-state. (E5)
+//  sub-command: report_edt_pins 
+//                                                                                                
+//  Pin description        Pin name             Inversion  Channel pipeline stages (mask register)
+//  ---------------        --------             ---------  ---------------------------------------
+//  Clock                  'edt_clock'              -                                             
+//  Update                 'edt_update'             -                                             
+//  Bypass mode            'edt_bypass'             -                                             
+//  Scan channel 1 input   'edt_channels_in1'       -                          2                  
+//   "      "    " output  'edt_channels_out1'      -                                             
+//  Scan channel 2 input   'edt_channels_in2'       -                          1                  
+//   "      "    " output  'edt_channels_out2'      -                                             
+//  Scan channel 3 input   'edt_channels_in3'       -                          1                  
+//   "      "    " output  'edt_channels_out3'      -                                             
+//                                                                                                
+//  sub-command: report_edt_configurations 
+//  
+//  IP version:                    8
+//  Shift cycles:                  57,  49 (internal scan length) + 8 (additional cycles)
+//  External scan channels:        3
+//  Internal scan chains:          3
+//  Masking bits:                  4
+//  Decompressor size:             16
+//  Compactor type:                Xpress
+//  Scan cells:                    147
+//  Compression per pattern:       0.86x (ATPG bypass = 3 x 49, EDT = 3 x 57)
+//  Bypass logic:                  On
+//  Lockup cells:                  On
+//  Clocking:                      edge-sensitive
+//  Compactor pipelining:          Off
+//  
+//  sub-command: report_edt_lockup_cells 
+//
+//  SCAN Clocking
+//  -----------+-----------------------------------------------+------------------------------------------------------------
+//             |                     First cell                |                                   Last cell
+//  Chain  (#) | Gate                    (id) Type  Cap Clock  | Gate                                  (id) Type  Chg Clock 
+//  -----------+-----------------------------------------------+------------------------------------------------------------
+//  chain0 (1) | /\rd_data_o_reg[0] /Q (1613) FF-LE  20 /clk_i | /ts_lockup_latchn_clkc1_intno48_i/  (1760) LA-LO  30 /clk_i
+//  chain1 (2) | /\fifo_reg[0][4] /Q   (1662) FF-LE  20 /clk_i | /ts_lockup_latchn_clkc2_intno97_i/  (1761) LA-LO  30 /clk_i
+//  chain2 (3) | /\fifo_reg[0][7] /Q   (1711) FF-LE  20 /clk_i | /ts_lockup_latchn_clkc3_intno146_i/ (1762) LA-LO  30 /clk_i
+//
+//  DECOMPRESSOR Lockup Cells
+//  -----------+-----------------
+//             | Lockup cell
+//  Chain  (#) | Type  Clock     
+//  -----------+-----------------
+//  chain0 (1) | FF-TE /edt_clock
+//  chain1 (2) | FF-TE /edt_clock
+//  chain2 (3) | FF-TE /edt_clock
+//
+//  COMPACTOR Lockup Cells
+//  ----------------------
+//  No lockup cells required
+//
+//  BYPASS Lockup Cells
+//  -------------------
+//  No lockup cells required
+//
+//  RELEVANT Clocks
+//  -----------+-------+------
+//             |  Off  |  Time
+//  Name       | state | LE TE
+//  -----------+-------+------
+//  /edt_clock |   0   | 20 30
+//  /clk_i     |   0   | 20 30
+//
+//  sub-command: write_edt_files edt/created -verilog -replace -synthesis_script RTL_Compiler 
+//  Writing edt/created_edt.v
+//  Writing edt/created_edt_top.v
+//  Writing edt/created_core_blackbox.v
+//  Writing edt/created_rtlc_script.scr
+//  Writing edt/created_edt.dofile
+//  Writing edt/created_edt.testproc
+//  Writing edt/created_bypass.dofile
+//  Writing edt/created_bypass.testproc
+//  Writing edt/created_edt.icl
+//  Writing edt/created_edt.pdl
+//  Writing edt/created_sync_fifo_edt.tcd
+//  sub-command: exit 
